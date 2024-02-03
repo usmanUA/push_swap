@@ -6,20 +6,20 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:08:11 by uahmed            #+#    #+#             */
-/*   Updated: 2023/12/01 16:31:16 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/01/30 17:29:18 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_stack	*ft_stacklast(t_stack *stack)
-{
-	while (stack->next)
-		stack = stack->next;
-	return (stack);
-}
+// t_stack	*ft_stacklast(t_stack_a *stack)
+// {
+// 	while (stack->next)
+// 		stack = stack->next;
+// 	return (stack);
+// }
 
-void	ft_stackadd_back(t_stack **stack, t_stack *last)
+void	ft_stackadd_back(t_stack_a **stack, t_stack_a *last)
 {
 	if (!stack)
 	{
@@ -29,7 +29,7 @@ void	ft_stackadd_back(t_stack **stack, t_stack *last)
 	ft_stacklast(*stack)->next = last;
 }
 
-void	ft_stackadd_front(t_stack **stack, t_stack *new)
+void	ft_stackadd_front(t_stack_a **stack, t_stack_a *new)
 {
 	if (!stack)
 	{
@@ -40,38 +40,52 @@ void	ft_stackadd_front(t_stack **stack, t_stack *new)
 	*stack = new;
 }
 
-t_stack	*ft_stacknew(int num, int tot, int *sorted)
+t_stack	*ft_stacknew(int num)
 {
 	t_stack	*new;
 	int		i;
 	int		ind;
 
-	new = (t_stack *)malloc(sizeof(t_stack));
+	new = (t_stack_a *)malloc(sizeof(t_stack_a));
 	if (!new)
 		return (0);
-	i = -1;
-	ind = 0;
-	while (++i < tot)
-	{
-		if (sorted[i] == num)
-			ind = i;
-	}
 	new->num = num;
-	new->ind = ind + 1;
 	new->next = NULL;
 	return (new);
 }
 
-void	ft_stackclear(t_stack **stack)
+void	ft_stackclear(t_stack_a *stack)
 {
 	t_stack	*temp;
 
 	if (!stack)
 		return ;
-	while (*stack)
+	while (stack)
 	{
-		temp = *stack;
-		*stack = (*stack)->next;
+		temp = stack;
+		stack = stack->next;
 		free(temp);
 	}
+}
+
+void	ft_stackdelone(t_stack_a *stack)
+{
+	t_stack	*temp;
+
+	temp = *stack;
+	stack = stack -> next;
+	free(temp);
+}
+
+int	ft_stacksize(t_stack_a *a)
+{
+	int	size;
+
+	size = 0;
+	while (a)
+	{
+		size++;
+		a = a -> next;
+	}
+	return (size);
 }

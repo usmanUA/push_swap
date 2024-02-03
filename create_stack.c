@@ -6,55 +6,42 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:11:26 by uahmed            #+#    #+#             */
-/*   Updated: 2023/12/01 16:43:42 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/01/30 16:50:28 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_createstacks(t_stack **stack, int *c, int *sorted, int tot, int b)
+int	ft_newstack(t_stack **a, int num)
+{
+	t_stack	*new;
+	
+	new = ft_stacknew(num);
+	if (!new)
+		return (0);
+	ft_stackadd_front(a, new);
+	return (1);
+}
+
+int	ft_createstack(int tot, t_stack **a, int *c)
 {
 	int		ind;
-	t_stack	*new;
+	
 
 	ind = -1;
 	while (++ind < tot)
 	{
-		new = ft_stacknew(c[ind], tot, sorted);
-		if (!new)
+		if (!ft_newstack(a, c[ind]))
 		{
-			free(c);
-			free(sorted);
+			free(c);  // is freeing c here valid?
 			return (0);
 		}
-		ft_stackadd_front(stack, new);
-		if (b)
-			write(1, "pb\n", 3);
+		
 	}
 	return (1);
 }
 
-int	ft_makestacks(int tot, t_stack **a, t_stack **b, int *c)
-{
-	int	*sorted;
-
-	sorted = ft_arrcpy(c, tot);
-	if (!sorted)
-	{
-		free(c);
-		return (0);
-	}
-	ft_quicksort(sorted, 0, tot - 1);
-	if (!ft_createstacks(a, c, sorted, tot, 0))
-		return (0);
-	if (!ft_createstacks(b, c, sorted, tot, 1))
-		return (0);
-	free(c);
-	free(sorted);
-	return (1);
-}
-
-int	ft_stack(int tot, t_stack **a, t_stack **b, char **argv)
+int	ft_stack(int tot, char **argv, t_stack_a **a)
 {
 	int		*c;
 	char	**str;
@@ -70,5 +57,5 @@ int	ft_stack(int tot, t_stack **a, t_stack **b, char **argv)
 			free(c);
 		return (0);
 	}
-	return (ft_makestacks(tot, a, b, c));
+	return (ft_createstack(tot, a, c));
 }
