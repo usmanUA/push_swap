@@ -6,7 +6,7 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:50:59 by uahmed            #+#    #+#             */
-/*   Updated: 2024/01/30 17:29:50 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/02/06 17:54:01 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@
 # include <limits.h>
 
 
-typedef struct s_stack_a
+typedef struct s_stack
 {
 	int				num;
-	struct s_stack_a	*next;
-}	t_stack_a;
+	struct s_stack	*next;
+}	t_stack;
 
-typedef struct s_stack_b
-{
-	int				num;
-	struct s_stack_b	*next;
-}					t_stack_b;
+// typedef struct s_stack_b
+// {
+// 	int				num;
+// 	struct s_stack_b	*next;
+// }					t_stack_b;
 
 typedef struct s_moves
 {
@@ -74,27 +74,27 @@ typedef struct s_limits
 
 typedef struct s_stacks
 {
-	t_stack_a *a;
-	t_stack_b *b;
+	t_stack *a;
+	t_stack *b;
 	t_moves *moves;
 	t_optimal *optimal;
 	t_limits *limits;
 } t_stacks;
 
-int					ft_createstack(int tot, t_stack_a *stack, int *c);
-int					ft_stack(int tot, char **argv, t_stack_a **a);
+int					ft_createstack(int tot, t_stack *stack, int *c);
+int					ft_stack(int tot, char **argv, t_stack **a);
 // t_stack				*ft_stacklast(t_stacks *stacks);
-void				ft_stackadd_back(t_stack_a *stack, t_stack_a *last);
-void				ft_stackadd_front(t_stack_a *stack, t_stack_a *new);
+// void				ft_stackadd_back(t_stack *stack, t_stack *last);
+void				ft_stackadd_front(t_stack *stack, t_stack *new);
 t_stack_a				*ft_stacknew(int num);
-void				ft_stackclear(t_stack_a *stack);
+void				ft_stackclear(t_stack *stack);
 size_t				ft_wordcount(char **words);
 int					ft_checknumdup(int *arr, int tot);
 int					*ft_numsarr(int tot, char **arg, int start);
 int					*ft_fromvar(char **argv, int *tot);
 int					*ft_arrcpy(int *c, int tot);
-void				ft_rotate(t_stacks *stack);
-void				ft_revrotate(t_stacks *stack);
+void				ft_rotate(t_stacks *stack, int move);
+void				ft_revrotate(t_stacks *stack, int move);
 void				ft_swap(t_stacks *stack);
 void				ft_free(char **s);
 

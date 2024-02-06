@@ -6,7 +6,7 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:08:11 by uahmed            #+#    #+#             */
-/*   Updated: 2024/01/30 17:29:18 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/02/06 17:24:24 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@
 // 	return (stack);
 // }
 
-void	ft_stackadd_back(t_stack_a **stack, t_stack_a *last)
-{
-	if (!stack)
-	{
-		*stack = last;
-		return ;
-	}
-	ft_stacklast(*stack)->next = last;
-}
+// void	ft_stackadd_back(t_stack_a **stack, t_stack_a *last)
+// {
+// 	if (!stack)
+// 	{
+// 		*stack = last;
+// 		return ;
+// 	}
+// 	ft_stacklast(*stack)->next = last;
+// }
 
-void	ft_stackadd_front(t_stack_a **stack, t_stack_a *new)
+void	ft_stackadd_front(t_stack **stack, t_stack_a *new)
 {
 	if (!stack)
 	{
@@ -54,7 +54,7 @@ t_stack	*ft_stacknew(int num)
 	return (new);
 }
 
-void	ft_stackclear(t_stack_a *stack)
+void	ft_stackclear(t_stack *stack)
 {
 	t_stack	*temp;
 
@@ -68,7 +68,7 @@ void	ft_stackclear(t_stack_a *stack)
 	}
 }
 
-void	ft_stackdelone(t_stack_a *stack)
+void	ft_stackdelone(t_stack *stack)
 {
 	t_stack	*temp;
 
@@ -77,7 +77,7 @@ void	ft_stackdelone(t_stack_a *stack)
 	free(temp);
 }
 
-int	ft_stacksize(t_stack_a *a)
+int	ft_stacksize(t_stack *a)
 {
 	int	size;
 
