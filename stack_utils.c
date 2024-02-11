@@ -6,86 +6,85 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:08:11 by uahmed            #+#    #+#             */
-/*   Updated: 2024/02/06 17:24:24 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/02/10 19:11:17 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// t_stack	*ft_stacklast(t_stack_a *stack)
-// {
-// 	while (stack->next)
-// 		stack = stack->next;
-// 	return (stack);
-// }
-
-// void	ft_stackadd_back(t_stack_a **stack, t_stack_a *last)
-// {
-// 	if (!stack)
-// 	{
-// 		*stack = last;
-// 		return ;
-// 	}
-// 	ft_stacklast(*stack)->next = last;
-// }
-
-void	ft_stackadd_front(t_stack **stack, t_stack_a *new)
+void	ft_freestr(char **str)
 {
-	if (!stack)
+	char **tmp;
+
+	tmp = str;
+	if (str)
 	{
-		*stack = new;
-		return ;
-	}
-	new->next = *stack;
-	*stack = new;
-}
-
-t_stack	*ft_stacknew(int num)
-{
-	t_stack	*new;
-	int		i;
-	int		ind;
-
-	new = (t_stack_a *)malloc(sizeof(t_stack_a));
-	if (!new)
-		return (0);
-	new->num = num;
-	new->next = NULL;
-	return (new);
-}
-
-void	ft_stackclear(t_stack *stack)
-{
-	t_stack	*temp;
-
-	if (!stack)
-		return ;
-	while (stack)
-	{
-		temp = stack;
-		stack = stack->next;
-		free(temp);
+		while (*str)
+		{
+			free(*str);
+			str++;
+		}
+		str = tmp;
+		free(str);
+		str = NULL;
 	}
 }
 
-void	ft_stackdelone(t_stack *stack)
+void    ft_moverest(t_stacks *stacks)
 {
-	t_stack	*temp;
-
-	temp = *stack;
-	stack = stack -> next;
-	free(temp);
+    while (stacks->optimal->rra)
+    {
+        ft_revrotate(stacks, 'a');
+        stacks->optimal->rra--;
+    }
+    while (stacks->optimal->rrr)
+    {
+        ft_revrotate(stacks, 'c');
+        stacks->optimal->rrr--;
+    }
+    ft_push(stacks, 'b');
 }
 
-int	ft_stacksize(t_stack *a)
+void    ft_moveoptimal(t_stacks *stacks)
 {
-	int	size;
-
-	size = 0;
-	while (a)
-	{
-		size++;
-		a = a -> next;
-	}
-	return (size);
+    while (stacks->optimal->rb)
+    {
+        ft_rotate(stacks, 'b');
+        stacks->optimal->rb--;
+    }
+    while (stacks->optimal->ra)
+    {
+        ft_rotate(stacks, 'a');
+        stacks->optimal->ra--;
+    }
+    while (stacks->optimal->rr)
+    {
+        ft_rotate(stacks, 'c');
+        stacks->optimal->rr--;
+    }
+    while (stacks->optimal->rrb)
+    {
+        ft_revrotate(stacks, 'b');
+        stacks->optimal->rrb--;
+    }
+    ft_moverest(stacks); 
 }
+
+int ft_findindex(t_stack *stack, int num)
+{
+    int ind;
+    t_stack *tmp;
+
+    tmp = stack;
+    ind = 0;
+    while (tmp)
+    {
+        if (tmp->num == num)
+            break ;
+        ind++;
+        tmp = tmp->next;
+    }
+    return (ind);
+}
+
+

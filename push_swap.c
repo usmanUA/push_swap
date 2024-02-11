@@ -6,34 +6,72 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:50:03 by uahmed            #+#    #+#             */
-/*   Updated: 2024/01/31 12:34:47 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/02/10 18:54:13 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_free(char **s)
+void	ft_freestack(t_stack *stack)
 {
-	while (*s)
+	t_stack *current;
+	
+	while (stack)
 	{
-		free(*s);
-		s++;
+		current = stack;
+		stack = stack->next;
+		free(current);
 	}
-	free(s);
-	s = NULL;
 }
 
+void	ft_freestacks(t_stacks *stacks)
+{
+	if (stacks->moves)
+		free(stacks->moves);
+	if (stacks->optimal)
+		free(stacks->optimal);
+	if (stacks->limits)
+		free(stacks->limits);
+	if (stacks->a)
+		ft_freestack(stacks->a);
+	if (stacks->b)
+		ft_freestack(stacks->b);
+}
+
+int	ft_initializestacks(t_stacks *stacks)
+{
+	t_limits *lims;
+	t_moves *move;
+	t_optimal *opt;
+	
+	lims = (t_limits *)malloc(sizeof(t_limits));
+	if (!lims)
+		return (0);
+	move = (t_moves *)malloc(sizeof(t_moves));
+	if (!move)
+		return (0);
+	opt = (t_optimal *)malloc(sizeof(t_optimal));
+	if (!opt)
+		return (0);
+	stacks->limits = lims;
+	stacks->moves = move;
+	stacks->optimal = opt;
+	return (1);
+}
 int	main(int argc, char **argv)
 {
-	t_stack_a	*a;
+	t_stack	*a;
 	t_stacks stacks;
 
-	if (!ft_stack(argc - 1, argv, &a))
+	a = NULL;
+	if (!ft_stack(argc - 1, argv, &a) || !ft_initializestacks(&stacks))
 	{
 		write(1, "Error\n", 6);
 		exit(EXIT_FAILURE);
 	}
 	stacks.a = a;
-	ft_sort(&stacks);
+	if (!ft_sort_small(&stacks))
+		ft_sort(&stacks);
+	ft_freestacks(&stacks);
 	return (0);
 }

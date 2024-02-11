@@ -6,15 +6,29 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:13:49 by uahmed            #+#    #+#             */
-/*   Updated: 2024/01/26 13:10:09 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/02/10 19:09:13 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-size_t	ft_wordcount(char **words)
+int	ft_sorted(int *c, int tot)
 {
-	size_t	count;
+	int ind;
+
+	ind = -1;
+	tot--;
+	while (++ind < tot)
+	{
+		if (c[ind] < c[ind + 1])
+			return (0);
+	}
+	return (1);
+}
+
+int	ft_wordcount(char **words)
+{
+	int	count;
 
 	count = 0;
 	while (words[count])
@@ -43,30 +57,31 @@ int	ft_checknumdup(int *arr, int tot)
 	return (0);
 }
 
-int	*ft_numsarr(int tot, char **arg, int start)
+int	*ft_numsarr(int tot, char **arg)
 {
 	int	*num;
-	int	ind;
 	int	n;
+	int ind;
 
 	num = malloc(sizeof(int) * tot);
 	if (!num)
 		return (0);
+	// printf("Allocated tot * int mem at %p for int* arr\n", num);
 	ind = -1;
-	while (++ind < tot)
+	while (tot--)
 	{
-		if (!ft_strncmp(arg[ind + start], "0", 1))
+		if (!ft_strncmp(arg[tot], "0", 1))
 			n = 0;
 		else
 		{
-			n = ft_atoi(arg[ind + start]);
+			n = ft_atoi(arg[tot]);
 			if (!n)
 			{
 				free(num);
 				return (0);
 			}
 		}
-		num[ind] = n;
+		num[++ind] = n;
 	}
 	return (num);
 }
@@ -80,21 +95,8 @@ int	*ft_fromvar(char **argv, int *tot)
 	if (!str)
 		return (0);
 	*tot = ft_wordcount(str);
-	numarr = ft_numsarr(*tot, str, 0);
-	ft_free(str);
+	numarr = ft_numsarr(*tot, str);
+	ft_freestr(str);
 	return (numarr);
 }
 
-int	*ft_arrcpy(int *c, int tot)
-{
-	int	ind;
-	int	*sorted;
-
-	sorted = malloc(tot * sizeof(int));
-	if (!sorted)
-		return (0);
-	ind = -1;
-	while (++ind < tot)
-		sorted[ind] = c[ind];
-	return (sorted);
-}
