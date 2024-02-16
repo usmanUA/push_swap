@@ -26,7 +26,7 @@
 # endif
 
 void	ft_free(char *s);
-size_t	ft_strlen(char *s);
+size_t	ft_strlen(const char *s);
 char	*ft_writeline(char *lines, char *line);
 size_t	ft_newline(char *s);
 void	ft_freebuff(char *lines);

@@ -14,7 +14,7 @@
 # define CHECKER_BONUS_H
 
 # include "libft/libft.h"
-#include "get_next_line/get_next_line.h"
+# include "get_next_line/get_next_line.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -58,7 +58,6 @@ void	ft_stackadd_front(t_stack **stack, t_stack *new);
 int	ft_stacksize(t_stack *stack);
 int	ft_newstack(t_stack **a, int num);
 void	ft_freestack(t_stack *stack);
-void	ft_freestacks(t_stacks *stacks);
 
 void	ft_freestr(char **str);
 
@@ -81,33 +80,13 @@ void    ft_push(t_stacks *stacks, int stack);
 void	ft_push_a(t_stacks *stacks);
 void	ft_push_b(t_stacks *stacks);
 
-void    ft_sort_two(t_stacks *stacks);
-void    ft_sort_three(t_stacks *stacks);
-void    ft_sort_four(t_stacks *stacks);
-int ft_sort_small(t_stacks *stacks);
-void    ft_sort(t_stacks *stacks);
-void    ft_findmoves(t_stacks *stacks);
-void    ft_get_top_a(t_stacks *stacks, t_stack *tmp_a, int size, int ind);
-void    ft_getmoves(t_stacks *stacks, int size, int ind, int stack);
-void    ft_savemoves(t_stacks *stacks, int r, int rr, int stack);
-void    ft_get_num_b(t_stacks *stacks, int num);
-int ft_findindex(t_stack *stack, int num);
-void    ft_newnum_b(t_stacks *stacks, t_stack *tmp_b, int num);
-void    ft_optimal(t_stacks *stacks, int ind);
-void	ft_optimize(t_stacks *stacks);
-void    ft_moveoptimal(t_stacks *stacks);
-void    ft_moverest(t_stacks *stacks);
-
-void    ft_move_back(t_stacks *stacks);
-void    ft_minmax(t_stacks *stacks, int stack);
-void    ft_setminmax(t_stacks *stacks, int min, int max, int stack);
-void    ft_newmax_a(t_stacks *stacks, t_stack *tmp_a);
-void    ft_newmin_a(t_stacks *stacks, t_stack *tmp_a);
-void    ft_get_num_a(t_stacks *stacks, t_stack *stack, int num);
-void    ft_bringup_a(t_stacks *stacks);
-
-
 void    ft_displaystacks(t_stacks *stacks); // remove me
 
+int	ft_stacksorted(t_stacks *stacks);
+int ft_applymoves(t_stacks *stacks);
+void	ft_saveinstructions(t_stacks *stacks);
+int	ft_exec_instructions(t_stacks *stacks, char *instruction);
+void	ft_freestacks(t_stacks *stacks);
+void	ft_freeinstructions(t_list *instructions);
 
 #endif
