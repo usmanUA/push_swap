@@ -1,12 +1,13 @@
 flags = -Wall -Wextra -Werror
 LIBFT = libft.a
 NAME = push_swap
-B_NAME = checker_Mac
+B_NAME = checker
 GREEN = \033[0;32m
 RED = \033[0;31m
 RESET = \033[0m
 
-FILES = push_swap.c\
+FILES = push_swap.c \
+		push_swap_utils.c \
 		create_stack.c \
 		int_array.c \
 		sort_small.c \
@@ -20,6 +21,7 @@ FILES = push_swap.c\
 		push_to_a_utils.c 
 
 B_FILES = checker_bonus.c \
+		  checker_utils_bonus.c \
 		  instructions_bonus.c  \
 		  instructions_utils_bonus.c \
 		  instructions_more_utils_bonus.c \

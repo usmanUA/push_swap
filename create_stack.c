@@ -14,15 +14,15 @@
 
 int	ft_stacksize(t_stack *stack)
 {
-	int	size;
-	t_stack *tmp;
+	int		size;
+	t_stack	*tmp;
 
 	tmp = stack;
 	size = 0;
 	while (tmp)
 	{
 		size++;
-		tmp = tmp -> next;
+		tmp = tmp->next;
 	}
 	return (size);
 }
@@ -41,7 +41,7 @@ void	ft_stackadd_front(t_stack **stack, t_stack *new)
 int	ft_newstack(t_stack **a, int num)
 {
 	t_stack	*new;
-	
+
 	new = (t_stack *)malloc(sizeof(t_stack));
 	if (!new)
 		return (0);
@@ -53,8 +53,8 @@ int	ft_newstack(t_stack **a, int num)
 
 int	ft_createstack(int tot, t_stack **a, int **c)
 {
-	int		ind;
-	
+	int	ind;
+
 	ind = -1;
 	while (++ind < tot)
 	{
@@ -65,7 +65,6 @@ int	ft_createstack(int tot, t_stack **a, int **c)
 			c = NULL;
 			return (0);
 		}
-		
 	}
 	free(*c);
 	c = NULL;
@@ -74,7 +73,7 @@ int	ft_createstack(int tot, t_stack **a, int **c)
 
 int	ft_stack(int tot, char **argv, t_stack **a)
 {
-	int		*c;
+	int	*c;
 
 	if (tot == 1)
 		c = ft_fromvar(argv, &tot);

@@ -6,7 +6,7 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:13:49 by uahmed            #+#    #+#             */
-/*   Updated: 2024/02/10 19:09:13 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/02/16 13:39:18 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_sorted(int *c, int tot)
 {
-	int ind;
+	int	ind;
 
 	ind = -1;
 	tot--;
@@ -61,12 +61,11 @@ int	*ft_numsarr(int tot, char **arg)
 {
 	int	*num;
 	int	n;
-	int ind;
+	int	ind;
 
 	num = malloc(sizeof(int) * tot);
 	if (!num)
 		return (0);
-	// printf("Allocated tot * int mem at %p for int* arr\n", num);
 	ind = -1;
 	while (tot--)
 	{
@@ -99,4 +98,3 @@ int	*ft_fromvar(char **argv, int *tot)
 	ft_freestr(str);
 	return (numarr);
 }
-

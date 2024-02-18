@@ -6,48 +6,11 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 18:50:03 by uahmed            #+#    #+#             */
-/*   Updated: 2024/02/11 17:36:01 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/02/17 14:24:02 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker_bonus.h"
-
-void	ft_freeinstructions(t_list *instructions)
-{
-	t_list *tmp;
-
-	while (instructions)
-	{
-		tmp = instructions->next;
-		ft_lstdelone(instructions, &free);
-		instructions = tmp;
-	}	
-}
-
-void	ft_freestack(t_stack *stack)
-{
-	t_stack *current;
-	
-	while (stack)
-	{
-		current = stack;
-		stack = stack->next;
-		free(current);
-	}
-}
-
-void	ft_freestacks(t_stacks *stacks)
-{
-	if (stacks->moves)
-		free(stacks->moves);
-	if (stacks->a)
-		ft_freestack(stacks->a);
-	if (stacks->b)
-		ft_freestack(stacks->b);
-	if (stacks->instructions)
-		ft_freeinstructions(stacks->instructions)
-}
-
 
 int	ft_exec_instructions(t_stacks *stacks, char *instruction)
 {
@@ -80,7 +43,7 @@ int	ft_exec_instructions(t_stacks *stacks, char *instruction)
 
 int	ft_stacksorted(t_stacks *stacks)
 {
-	t_stack *tmp_a;
+	t_stack	*tmp_a;
 
 	tmp_a = stacks->a;
 	if (stacks->b)
@@ -96,14 +59,13 @@ int	ft_stacksorted(t_stacks *stacks)
 
 void	ft_saveinstructions(t_stacks *stacks)
 {
-	char *line;
-	t_list *instructions;
+	char	*line;
+	t_list	*instructions;
 
 	instructions = NULL;
 	while (1)
 	{
 		line = get_next_line(0);
-		// printf("line: %s", (line));
 		if (!line)
 			break ;
 		ft_lstadd_back(&instructions, ft_lstnew(line));
@@ -111,19 +73,15 @@ void	ft_saveinstructions(t_stacks *stacks)
 	stacks->instructions = instructions;
 }
 
-int ft_applymoves(t_stacks *stacks)
+int	ft_applymoves(t_stacks *stacks)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = stacks->instructions;
 	while (tmp)
 	{
-		// printf("instruction: %s\n", (char *)tmp->content);
 		if (!ft_exec_instructions(stacks, (char *)tmp->content))
-		{
-			// write(1, "here\n", 5);
 			return (0);
-		}
 		tmp = tmp->next;
 	}
 	return (1);
@@ -131,9 +89,8 @@ int ft_applymoves(t_stacks *stacks)
 
 int	main(int argc, char **argv)
 {
-	t_stack	*a;
-	t_stacks stacks;
-	// t_list	*tmp;
+	t_stack		*a;
+	t_stacks	stacks;
 
 	if (argc == 1)
 		return (0);

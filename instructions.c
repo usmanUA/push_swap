@@ -6,7 +6,7 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:05:03 by uahmed            #+#    #+#             */
-/*   Updated: 2024/02/10 19:27:19 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/02/16 13:42:26 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_rotate(t_stacks *stacks, int move)
 		ft_rotate_b(stacks);
 	}
 }
+
 void	ft_revrotate(t_stacks *stacks, int move)
 {
 	if (move == 'a')
@@ -69,22 +70,18 @@ void	ft_swap(t_stacks *stacks, int move)
 		ft_swap_a(stacks);
 		ft_swap_b(stacks);
 	}
-
 }
 
-void    ft_push(t_stacks *stacks, int stack)
+void	ft_push(t_stacks *stacks, int stack)
 {
-    if (stack == 'a')
-    {
-        ft_push_b(stacks);
-        write(1, "pa\n", 3);
-    }
-    else if (stack == 'b')
-    {
-        ft_push_a(stacks);
-        write(1, "pb\n", 3);
-    }
+	if (stack == 'a')
+	{
+		ft_push_b(stacks);
+		write(1, "pa\n", 3);
+	}
+	else if (stack == 'b')
+	{
+		ft_push_a(stacks);
+		write(1, "pb\n", 3);
+	}
 }
-
-
-

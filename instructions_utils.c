@@ -14,9 +14,9 @@
 
 void	ft_rotate_b(t_stacks *stacks)
 {
-	t_stack *last;
-	t_stack *tmp;
-	
+	t_stack	*last;
+	t_stack	*tmp;
+
 	last = stacks->b;
 	tmp = stacks->b->next;
 	while (stacks->b->next)
@@ -28,10 +28,10 @@ void	ft_rotate_b(t_stacks *stacks)
 
 void	ft_revrotate_b(t_stacks *stacks)
 {
-	t_stack *first;
-	t_stack *second;
-	t_stack *tmp;
-	
+	t_stack	*first;
+	t_stack	*second;
+	t_stack	*tmp;
+
 	second = stacks->b;
 	tmp = stacks->b;
 	while (tmp->next->next)
@@ -44,8 +44,8 @@ void	ft_revrotate_b(t_stacks *stacks)
 
 void	ft_push_b(t_stacks *stacks)
 {
-	t_stack *tmp_a;
-	
+	t_stack	*tmp_a;
+
 	tmp_a = stacks->a;
 	stacks->a = stacks->b;
 	stacks->b = stacks->b->next;
@@ -54,8 +54,8 @@ void	ft_push_b(t_stacks *stacks)
 
 void	ft_swap_a(t_stacks *stacks)
 {
-	int tmp;
-	
+	int	tmp;
+
 	tmp = stacks->a->num;
 	stacks->a->num = stacks->a->next->num;
 	stacks->a->next->num = tmp;
@@ -63,8 +63,8 @@ void	ft_swap_a(t_stacks *stacks)
 
 void	ft_swap_b(t_stacks *stacks)
 {
-	int tmp;
-	
+	int	tmp;
+
 	tmp = stacks->b->num;
 	stacks->b->num = stacks->b->next->num;
 	stacks->b->next->num = tmp;

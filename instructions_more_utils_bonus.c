@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   instructions_more_utils.c                          :+:      :+:    :+:   */
+/*   instructions_more_utils_bonus.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 19:25:50 by uahmed            #+#    #+#             */
-/*   Updated: 2024/02/11 15:12:36 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/02/17 14:25:13 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_rotate_a(t_stacks *stacks)
 {
-	t_stack *last;
-	t_stack *tmp;
-	
+	t_stack	*last;
+	t_stack	*tmp;
+
 	last = stacks->a;
 	stacks->a = stacks->a->next;
 	tmp = stacks->a;
@@ -29,10 +29,10 @@ void	ft_rotate_a(t_stacks *stacks)
 
 void	ft_revrotate_a(t_stacks *stacks)
 {
-	t_stack *first;
-	t_stack *second;
-	t_stack *tmp;
-	
+	t_stack	*first;
+	t_stack	*second;
+	t_stack	*tmp;
+
 	second = stacks->a;
 	tmp = stacks->a;
 	while (tmp->next->next)
@@ -45,14 +45,13 @@ void	ft_revrotate_a(t_stacks *stacks)
 
 void	ft_push_a(t_stacks *stacks)
 {
-	t_stack *tmp_b;
-	
-	if (!stacks -> b)
+	t_stack	*tmp_b;
+
+	if (!stacks->b)
 	{
 		stacks->b = stacks->a;
 		stacks->a = stacks->a->next;
 		stacks->b->next = NULL;
-		// ft_displaystacks(stacks);
 	}
 	else
 	{
@@ -60,7 +59,5 @@ void	ft_push_a(t_stacks *stacks)
 		stacks->b = stacks->a;
 		stacks->a = stacks->a->next;
 		stacks->b->next = tmp_b;
-		// ft_displaystacks(stacks);
 	}
 }
-
