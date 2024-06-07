@@ -8,6 +8,7 @@ RESET = \033[0m
 
 FILES = push_swap.c \
 		push_swap_utils.c \
+		check_input.c \
 		create_stack.c \
 		int_array.c \
 		sort_small.c \
@@ -15,19 +16,20 @@ FILES = push_swap.c \
 		push_to_b_utils.c \
 		instructions.c \
 		instructions_utils.c \
-		instructions_more_utils.c \
 		stack_utils.c \
 		push_to_a.c \
-		push_to_a_utils.c 
+		push_to_a_utils.c \
+		push_utils.c \
+		free_mem.c 
 
 B_FILES = checker_bonus.c \
 		  checker_utils_bonus.c \
-		  instructions_bonus.c  \
-		  instructions_utils_bonus.c \
-		  instructions_more_utils_bonus.c \
-		  stack_utils_bonus.c \
-		  int_array_bonus.c \
-		  create_stack_bonus.c \
+		  check_input.c \
+		  create_stack.c \
+		  int_array.c \
+		  instructions.c \
+		  instructions_utils.c \
+		  free_mem.c \
 		  get_next_line/get_next_line.c \
 		  get_next_line/get_next_line_utils.c
 
@@ -37,22 +39,27 @@ B_OBJS = $(B_FILES:.c=.o)
 
 all: $(NAME)
 
+
 $(NAME): $(OBJS) $(LIBFT)
-	@[ -f $(NAME) ] || (echo "$(GREEN)Creating The Executable:   $(NAME)$(RESET)" && cc $(OBJS) libft/$(LIBFT) -o $(NAME))
+	@(echo "$(GREEN)Creating The Executable:   $(NAME)$(RESET)" && cc $(OBJS) -o $(NAME) libft/$(LIBFT))
 	
 %.o: %.c
-	@[ -f $@ ] || (echo "$(GREEN)Creating Object File: $@$(RESET)" && cc -g $(flags) -c $< -o $@)
+	@(echo "$(GREEN)Creating Object File: $@$(RESET)" && cc -g $(flags) -c $< -o $@)
 	
-bonus: $(B_OBJS) $(LIBFT)
-	@[ -f $(B_NAME) ] || (echo "$(GREEN)Creating The Executable:   $(B_NAME)$(RESET)" && cc $(B_OBJS) libft/$(LIBFT) -o $(B_NAME))
+bonus: $(B_OBJS) .bonus
+	@(echo "$(GREEN)Creating The Executable:   $(B_NAME)$(RESET)" && cc $(B_OBJS) libft/$(LIBFT) -o $(B_NAME))
 
 $(LIBFT):
+	@$(MAKE) -C libft
+
+.bonus: $(LIBFT)
 	@$(MAKE) -C libft bonus
+	@touch .bonus
 
 clean:
 	@echo "$(RED)Cleaning Object Files for libft and push_swap$(RESET)"
 	@$(MAKE) -C libft clean
-	@rm -rf $(OBJS) $(B_OBJS)
+	@rm -rf $(OBJS) $(B_OBJS) .bonus
 
 fclean: clean
 	@echo "$(RED)Removing   $(LIBFT) and $(NAME)$(RESET)"
@@ -61,4 +68,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus

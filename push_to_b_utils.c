@@ -6,34 +6,17 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:52:34 by uahmed            #+#    #+#             */
-/*   Updated: 2024/02/16 13:18:09 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/02/20 17:01:29 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_optimize(t_stacks *stacks)
-{
-	while (stacks->optimal->ra > 0 && stacks->optimal->rb > 0)
-	{
-		stacks->optimal->ra--;
-		stacks->optimal->rb--;
-		stacks->optimal->rr++;
-		printf("rr's value: %d\n", stacks->optimal->rr);
-	}
-	while (stacks->optimal->rra > 0 && stacks->optimal->rrb > 0)
-	{
-		stacks->optimal->rra--;
-		stacks->optimal->rrb--;
-		stacks->optimal->rrr++;
-		printf("rrr's value: %d\n", stacks->optimal->rrr);
-	}
-}
-
 void	ft_optimal(t_stacks *stacks, int ind)
 {
 	stacks->moves->cost = stacks->moves->pb + stacks->moves->ra
-		+ stacks->moves->rra + stacks->moves->rb + stacks->moves->rrb;
+		+ stacks->moves->rra + stacks->moves->rb + stacks->moves->rrb
+		+ stacks->moves->rr + stacks->moves->rrr;
 	if (ind == 0 || stacks->optimal->cost > stacks->moves->cost)
 	{
 		stacks->optimal->cost = stacks->moves->cost;
@@ -42,10 +25,32 @@ void	ft_optimal(t_stacks *stacks, int ind)
 		stacks->optimal->rra = stacks->moves->rra;
 		stacks->optimal->rb = stacks->moves->rb;
 		stacks->optimal->rrb = stacks->moves->rrb;
+		stacks->optimal->rr = stacks->moves->rr;
+		stacks->optimal->rrr = stacks->moves->rrr;
 	}
 }
 
-void	ft_newnum_b(t_stacks *stacks, t_stack *tmp_b, int num)
+int	ft_num_b(t_stack *stack_b, int num_a)
+{
+	int	*nums;
+	int	tot;
+	int	i;
+	int	max;
+
+	tot = ft_num_arr_size(stack_b, num_a, 0);
+	nums = ft_next_prev_nums(stack_b, num_a, tot, 0);
+	max = nums[0];
+	i = -1;
+	while (++i < tot)
+	{
+		if (max < nums[i])
+			max = nums[i];
+	}
+	free(nums);
+	return (max);
+}
+
+void	ft_newnum_b(t_stacks *stacks, t_stack *tmp_b, int num_a)
 {
 	t_stack	*tmp_again;
 	int		num_b;
@@ -53,19 +58,13 @@ void	ft_newnum_b(t_stacks *stacks, t_stack *tmp_b, int num)
 	int		size_b;
 
 	tmp_again = tmp_b;
-	num_b = 0;
-	while (tmp_again)
-	{
-		if (num < tmp_again->num && num > tmp_again->next->num)
-			num_b = tmp_again->next->num;
-		tmp_again = tmp_again->next;
-	}
+	num_b = ft_num_b(tmp_b, num_a);
 	ind_b = ft_findindex(tmp_b, num_b);
 	size_b = ft_stacksize(tmp_b);
 	ft_getmoves(stacks, size_b, ind_b, 'b');
 }
 
-void	ft_savemoves(t_stacks *stacks, int r, int rr, int stack)
+static void	ft_savemoves(t_stacks *stacks, int r, int rr, int stack)
 {
 	if (stack == 'a')
 	{

@@ -6,13 +6,13 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:57:57 by uahmed            #+#    #+#             */
-/*   Updated: 2024/02/11 16:50:42 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/03/11 13:44:59 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	ft_free(char *s)
+static void	ft_freestr(char *s)
 {
 	if (s != NULL)
 	{
@@ -67,11 +67,11 @@ char	*ft_writeline(char *lines, char *line)
 	new_line = malloc(lines_len + ft_strlen(line) + 1);
 	if (!new_line)
 	{
-		ft_free(line);
+		ft_freestr(line);
 		return (NULL);
 	}
 	ft_copylines(&new_line, line, lines);
-	ft_free(line);
+	ft_freestr(line);
 	return (new_line);
 }
 

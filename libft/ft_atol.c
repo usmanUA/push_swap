@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 16:52:56 by uahmed            #+#    #+#             */
-/*   Updated: 2024/03/05 15:36:52 by uahmed           ###   ########.fr       */
+/*   Created: 2024/02/19 15:49:58 by uahmed            #+#    #+#             */
+/*   Updated: 2024/02/19 16:04:34 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+long int	ft_atol(const char *s)
 {
-	if (!lst && new)
+	long int	num;
+	int			sign;
+
+	sign = 1;
+	num = 0;
+	while (ft_isspace(*s))
+		s++;
+	if (*s == '-' || *s == '+')
 	{
-		*lst = new;
-		return ;
+		if (*(s++) == '-')
+			sign *= -1;
 	}
-	if (lst && new)
-	{
-		new->next = *lst;
-		*lst = new;
-	}
+	while (ft_isdigit(*s))
+		num = num * 10 + (*(s++) - '0');
+	return (num * sign);
 }

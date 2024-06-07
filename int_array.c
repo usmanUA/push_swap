@@ -6,7 +6,7 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:13:49 by uahmed            #+#    #+#             */
-/*   Updated: 2024/02/16 13:39:18 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/03/13 12:10:44 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,41 +60,16 @@ int	ft_checknumdup(int *arr, int tot)
 int	*ft_numsarr(int tot, char **arg)
 {
 	int	*num;
-	int	n;
 	int	ind;
 
+	ind = -1;
 	num = malloc(sizeof(int) * tot);
 	if (!num)
-		return (0);
-	ind = -1;
-	while (tot--)
 	{
-		if (!ft_strncmp(arg[tot], "0", 1))
-			n = 0;
-		else
-		{
-			n = ft_atoi(arg[tot]);
-			if (!n)
-			{
-				free(num);
-				return (0);
-			}
-		}
-		num[++ind] = n;
+		ft_free(arg, 0);
+		exit(EXIT_FAILURE);
 	}
+	while (tot--)
+		num[++ind] = ft_atoi(arg[tot]);
 	return (num);
-}
-
-int	*ft_fromvar(char **argv, int *tot)
-{
-	char	**str;
-	int		*numarr;
-
-	str = ft_split(argv[1], ' ');
-	if (!str)
-		return (0);
-	*tot = ft_wordcount(str);
-	numarr = ft_numsarr(*tot, str);
-	ft_freestr(str);
-	return (numarr);
 }

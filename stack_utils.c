@@ -6,68 +6,26 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:08:11 by uahmed            #+#    #+#             */
-/*   Updated: 2024/02/16 13:40:14 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/02/22 14:00:59 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_freestr(char **str)
+void	ft_newmin_a(t_stacks *stacks)
 {
-	char	**tmp;
+	int		imin_a;
+	int		size_a;
+	t_stack	*tmp;
 
-	tmp = str;
-	if (str)
-	{
-		while (*str)
-		{
-			free(*str);
-			str++;
-		}
-		str = tmp;
-		free(str);
-		str = NULL;
-	}
-}
-
-void	ft_moverest(t_stacks *stacks)
-{
-	while (stacks->optimal->rra)
-	{
-		ft_revrotate(stacks, 'a');
-		stacks->optimal->rra--;
-	}
-	while (stacks->optimal->rrr)
-	{
-		ft_revrotate(stacks, 'c');
-		stacks->optimal->rrr--;
-	}
-	ft_push(stacks, 'b');
-}
-
-void	ft_moveoptimal(t_stacks *stacks)
-{
-	while (stacks->optimal->rb)
-	{
-		ft_rotate(stacks, 'b');
-		stacks->optimal->rb--;
-	}
-	while (stacks->optimal->ra)
-	{
-		ft_rotate(stacks, 'a');
-		stacks->optimal->ra--;
-	}
-	while (stacks->optimal->rr)
-	{
-		ft_rotate(stacks, 'c');
-		stacks->optimal->rr--;
-	}
-	while (stacks->optimal->rrb)
-	{
-		ft_revrotate(stacks, 'b');
-		stacks->optimal->rrb--;
-	}
-	ft_moverest(stacks);
+	stacks->moves->ra = 0;
+	stacks->moves->rra = 0;
+	if (stacks->a->num == stacks->limits->min_a)
+		return ;
+	tmp = stacks->a;
+	imin_a = ft_findindex(tmp, stacks->limits->min_a);
+	size_a = ft_stacksize(tmp);
+	ft_getmoves(stacks, size_a, imin_a, 'a');
 }
 
 int	ft_findindex(t_stack *stack, int num)

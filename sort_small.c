@@ -6,15 +6,15 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 11:26:39 by uahmed            #+#    #+#             */
-/*   Updated: 2024/02/16 15:34:27 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/02/22 14:13:27 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_sort_two(t_stacks *stacks)
+static void	ft_sort_two(t_stacks *stacks)
 {
-	ft_swap(stacks, 'a');
+	ft_swap(stacks, 'a', 1);
 }
 
 void	ft_sort_three(t_stacks *stacks)
@@ -27,26 +27,26 @@ void	ft_sort_three(t_stacks *stacks)
 	n2 = stacks->a->next->num;
 	n3 = stacks->a->next->next->num;
 	if (n1 > n2 && n2 < n3 && n1 < n3)
-		ft_swap(stacks, 'a');
+		ft_swap(stacks, 'a', 1);
 	else if (n1 > n2 && n2 > n3 && n1 > n3)
 	{
-		ft_swap(stacks, 'a');
-		ft_revrotate(stacks, 'a');
+		ft_swap(stacks, 'a', 1);
+		ft_revrotate(stacks, 'a', 1);
 	}
 	else if (n1 > n2 && n2 < n3 && n1 > n3)
-		ft_rotate(stacks, 'a');
+		ft_rotate(stacks, 'a', 1);
 	else if (n1 < n2 && n2 > n3 && n1 < n3)
 	{
-		ft_swap(stacks, 'a');
-		ft_rotate(stacks, 'a');
+		ft_swap(stacks, 'a', 1);
+		ft_rotate(stacks, 'a', 1);
 	}
 	else if (n1 < n2 && n2 > n3 && n1 > n3)
-		ft_revrotate(stacks, 'a');
+		ft_revrotate(stacks, 'a', 1);
 }
 
-void	ft_sort_four(t_stacks *stacks)
+static void	ft_sort_four(t_stacks *stacks)
 {
-	ft_push(stacks, 'b');
+	ft_push(stacks, 'b', 1);
 	ft_sort_three(stacks);
 	ft_move_back(stacks);
 }
@@ -65,6 +65,8 @@ int	ft_sort_small(t_stacks *stacks)
 	}
 	else if (ft_stacksize(stacks->a) == 4)
 	{
+		if (!ft_initializestacks(stacks))
+			return (1);
 		ft_sort_four(stacks);
 		return (1);
 	}

@@ -6,17 +6,19 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 19:16:51 by uahmed            #+#    #+#             */
-/*   Updated: 2024/02/11 14:41:23 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/03/13 12:36:14 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_rotate_b(t_stacks *stacks)
+static void	ft_rotate_b(t_stacks *stacks)
 {
 	t_stack	*last;
 	t_stack	*tmp;
 
+	if (!stacks->b || !stacks->b->next)
+		return ;
 	last = stacks->b;
 	tmp = stacks->b->next;
 	while (stacks->b->next)
@@ -26,12 +28,14 @@ void	ft_rotate_b(t_stacks *stacks)
 	last->next = NULL;
 }
 
-void	ft_revrotate_b(t_stacks *stacks)
+static void	ft_revrotate_b(t_stacks *stacks)
 {
 	t_stack	*first;
 	t_stack	*second;
 	t_stack	*tmp;
 
+	if (!stacks->b || !stacks->b->next)
+		return ;
 	second = stacks->b;
 	tmp = stacks->b;
 	while (tmp->next->next)
@@ -42,30 +46,66 @@ void	ft_revrotate_b(t_stacks *stacks)
 	stacks->b = first;
 }
 
-void	ft_push_b(t_stacks *stacks)
+static void	ft_revrotate_a(t_stacks *stacks)
 {
-	t_stack	*tmp_a;
+	t_stack	*first;
+	t_stack	*second;
+	t_stack	*tmp;
 
-	tmp_a = stacks->a;
-	stacks->a = stacks->b;
-	stacks->b = stacks->b->next;
-	stacks->a->next = tmp_a;
+	if (!stacks->a || !stacks->a->next)
+		return ;
+	second = stacks->a;
+	tmp = stacks->a;
+	while (tmp->next->next)
+		tmp = tmp->next;
+	first = tmp->next;
+	tmp->next = NULL;
+	first->next = second;
+	stacks->a = first;
 }
 
-void	ft_swap_a(t_stacks *stacks)
+void	ft_rotate(t_stacks *stacks, int move, int print)
 {
-	int	tmp;
-
-	tmp = stacks->a->num;
-	stacks->a->num = stacks->a->next->num;
-	stacks->a->next->num = tmp;
+	if (move == 'a')
+	{
+		if (print)
+			write(1, "ra\n", 3);
+		ft_rotate_a(stacks);
+	}
+	else if (move == 'b')
+	{
+		if (print)
+			write(1, "rb\n", 3);
+		ft_rotate_b(stacks);
+	}
+	else
+	{
+		if (print)
+			write(1, "rr\n", 3);
+		ft_rotate_a(stacks);
+		ft_rotate_b(stacks);
+	}
 }
 
-void	ft_swap_b(t_stacks *stacks)
+void	ft_revrotate(t_stacks *stacks, int move, int print)
 {
-	int	tmp;
-
-	tmp = stacks->b->num;
-	stacks->b->num = stacks->b->next->num;
-	stacks->b->next->num = tmp;
+	if (move == 'a')
+	{
+		if (print)
+			write(1, "rra\n", 4);
+		ft_revrotate_a(stacks);
+	}
+	else if (move == 'b')
+	{
+		if (print)
+			write(1, "rrb\n", 4);
+		ft_revrotate_b(stacks);
+	}
+	else
+	{
+		if (print)
+			write(1, "rrr\n", 4);
+		ft_revrotate_a(stacks);
+		ft_revrotate_b(stacks);
+	}
 }

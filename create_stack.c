@@ -6,7 +6,7 @@
 /*   By: uahmed <uahmed@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:11:26 by uahmed            #+#    #+#             */
-/*   Updated: 2024/02/10 19:09:02 by uahmed           ###   ########.fr       */
+/*   Updated: 2024/03/13 12:12:58 by uahmed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_stacksize(t_stack *stack)
 	return (size);
 }
 
-void	ft_stackadd_front(t_stack **stack, t_stack *new)
+static void	ft_stackadd_front(t_stack **stack, t_stack *new)
 {
 	if (!stack)
 	{
@@ -38,7 +38,7 @@ void	ft_stackadd_front(t_stack **stack, t_stack *new)
 	*stack = new;
 }
 
-int	ft_newstack(t_stack **a, int num)
+static int	ft_newstack(t_stack **a, int num)
 {
 	t_stack	*new;
 
@@ -51,7 +51,7 @@ int	ft_newstack(t_stack **a, int num)
 	return (1);
 }
 
-int	ft_createstack(int tot, t_stack **a, int **c)
+static void	ft_createstack(int tot, t_stack **a, int **c)
 {
 	int	ind;
 
@@ -62,30 +62,34 @@ int	ft_createstack(int tot, t_stack **a, int **c)
 		{
 			ft_freestack(*a);
 			free(*c);
-			c = NULL;
-			return (0);
 		}
 	}
 	free(*c);
-	c = NULL;
-	return (1);
 }
 
-int	ft_stack(int tot, char **argv, t_stack **a)
+void	ft_stack(int tot, char **argv, t_stack **a, int bonus)
 {
 	int	*c;
+	int	fre;
 
+	fre = 0;
 	if (tot == 1)
-		c = ft_fromvar(argv, &tot);
-	else
-		c = ft_numsarr(tot, &argv[1]);
-	if (!c)
-		return (0);
-	if (ft_checknumdup(c, tot) || ft_sorted(c, tot))
+		fre = 1;
+	if (tot == 1)
+		tot = ft_wordcount(argv);
+	c = ft_numsarr(tot, argv);
+	if (ft_checknumdup(c, tot))
+	{
+		free(c);
+		ft_error(argv, fre);
+	}
+	if ((!bonus && ft_sorted(c, tot)))
 	{
 		if (c)
 			free(c);
-		return (0);
+		if (fre)
+			ft_free(argv, 0);
+		exit(0);
 	}
-	return (ft_createstack(tot, a, &c));
+	ft_createstack(tot, a, &c);
 }
